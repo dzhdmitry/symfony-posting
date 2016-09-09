@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="post")
@@ -30,11 +31,13 @@ abstract class Post
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotNull
      */
     protected $title;
 
     /**
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotNull
      */
     protected $content;
 
