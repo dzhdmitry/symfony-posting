@@ -1,4 +1,8 @@
-symfony-posting
-===============
+Posting
+=======
 
-A Symfony project created on September 9, 2016, 12:57 pm.
+Posting Symfony 3 app
+
+## License
+
+Licensed under the [MIT license](https://github.com/dzhdmitry/dx/blob/master/LICENSE).
