@@ -5,8 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AuthorPost;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\RegularPost;
-use AppBundle\Form\AuthorPostType;
-use AppBundle\Form\RegularPostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +22,8 @@ class PostController extends Controller
      */
     public function createAction()
     {
-        $authorPostForm = $this->createAuthorPostForm();
-        $regularPostForm = $this->createRegularPostForm();
+        $authorPostForm = $this->get("author_form_creator")->createForm();
+        $regularPostForm = $this->get("regular_form_creator")->createForm();
 
         return [
             'authorPostForm' => $authorPostForm->createView(),
@@ -42,17 +40,14 @@ class PostController extends Controller
     public function createAuthorPostAction(Request $request)
     {
         $authorPost = new AuthorPost();
-        $authorPostForm = $this->createAuthorPostForm($authorPost);
-        $regularPostForm = $this->createRegularPostForm();
+        $authorPostForm = $this->get("author_form_creator")->createForm($authorPost);
+        $regularPostForm = $this->get("regular_form_creator")->createForm();
 
         if ($request->isMethod("post")) {
             $authorPostForm->handleRequest($request);
 
             if ($authorPostForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($authorPost);
-                $em->flush();
+                $this->get("post_manager")->save($authorPost);
 
                 return $this->redirectToRoute("homepage");
             }
@@ -74,17 +69,14 @@ class PostController extends Controller
     public function createRegularPostAction(Request $request)
     {
         $regularPost = new RegularPost();
-        $authorPostForm = $this->createAuthorPostForm();
-        $regularPostForm = $this->createRegularPostForm($regularPost);
+        $authorPostForm = $this->get("author_form_creator")->createForm();
+        $regularPostForm = $this->get("regular_form_creator")->createForm($regularPost);
 
         if ($request->isMethod("post")) {
             $regularPostForm->handleRequest($request);
 
             if ($regularPostForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($regularPost);
-                $em->flush();
+                $this->get("post_manager")->save($regularPost);
 
                 return $this->redirectToRoute("homepage");
             }
@@ -105,33 +97,21 @@ class PostController extends Controller
      */
     public function postAction(Request $request, $id)
     {
-        $post = $this->findPostOr404($id);
-        $action = $this->generateUrl("post", [
-            'id' => $post->getId()
-        ]);
+        $post = $this->get("post_manager")->findPostOr404($id);
 
         if ($post->getPostType() == Post::TYPE_AUTHOR) {
+            $form = $this->get("author_form_creator")->createEditForm($post);
             $template = "@App/Post/post.author.html.twig";
-            $form = $this->createForm(AuthorPostType::class, $post, [
-                'action' => $action,
-                'method' => "put"
-            ]);
         } else {
+            $form = $this->get("regular_form_creator")->createEditForm($post);
             $template = "@App/Post/post.regular.html.twig";
-            $form = $this->createForm(RegularPostType::class, $post, [
-                'action' => $action,
-                'method' => "put"
-            ]);
         }
 
         if ($request->isMethod("put")) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($post);
-                $em->flush();
+                $this->get("post_manager")->save($post);
 
                 return $this->redirectToRoute("post", [
                     'id' => $post->getId()
@@ -152,47 +132,10 @@ class PostController extends Controller
      */
     public function postViewAction($id)
     {
-        $post = $this->findPostOr404($id);
+        $post = $this->get("post_manager")->findPostOr404($id);
 
         return [
             'post' => $post
         ];
-    }
-
-    /**
-     * @param $id
-     * @return Post
-     */
-    protected function findPostOr404($id)
-    {
-        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
-
-        if ($post) {
-            return $post;
-        } else {
-            throw $this->createNotFoundException();
-        }
-    }
-
-    /**
-     * @param AuthorPost|null $post
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function createAuthorPostForm($post = null)
-    {
-        return $this->createForm(AuthorPostType::class, $post, [
-            'action' => $this->generateUrl("post_create_author")
-        ]);
-    }
-
-    /**
-     * @param RegularPost|null $post
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function createRegularPostForm($post = null)
-    {
-        return $this->createForm(RegularPostType::class, $post, [
-            'action' => $this->generateUrl("post_create_regular")
-        ]);
     }
 }

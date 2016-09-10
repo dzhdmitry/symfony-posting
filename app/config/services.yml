@@ -10,3 +10,15 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    author_form_creator:
+        class: AppBundle\Service\AuthorPostFormCreator
+        arguments: [ "@router", "@form.factory" ]
+
+    regular_form_creator:
+        class: AppBundle\Service\RegularPostFormCreator
+        arguments: [ "@router", "@form.factory" ]
+
+    post_manager:
+        class: AppBundle\Service\PostManager
+        arguments: [ "@doctrine.orm.entity_manager" ]
