@@ -12,19 +12,27 @@
             <div class="col-sm-9">
                 {% for post in posts %}
                     {% include "@App/post.item.html.twig" %}
+                {% else %}
+                    <div class="alert alert-info">
+                        There is no posts yet
+                    </div>
                 {% endfor %}
             </div>
 
             <div class="col-sm-3">
-                <h4>Select a tag</h4>
+                {% if tags|length > 0 %}
+                    <h4>Select a tag</h4>
 
-                <ul>
-                    {% for tag in tags %}
-                        <li>
-                            <a href="{{ path("posts_by_tag", {tagName: tag.name}) }}">{{ tag.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                    <ul class="post-tags">
+                        {% for tag in tags %}
+                            <li>
+                                <a href="{{ path("posts_by_tag", {tagName: tag.name}) }}" class="btn btn-default btn-xs">
+                                    {{ tag.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -4,11 +4,10 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\AuthorPost;
 use AppBundle\Entity\AuthorPostDetails;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AuthorPostType extends AbstractType
+class AuthorPostType extends PostType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,9 +15,9 @@ class AuthorPostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('title')
-            ->add('content')
             ->add('authorPostDetails', AuthorPostDetailsType::class, [
                 'data_class' => AuthorPostDetails::class
             ])

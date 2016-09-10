@@ -3,12 +3,11 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\RegularPost;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegularPostType extends AbstractType
+class RegularPostType extends PostType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,9 +15,9 @@ class RegularPostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('title')
-            ->add('content')
             ->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
                 'label' => false,

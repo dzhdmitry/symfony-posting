@@ -1,9 +1,17 @@
 <div class="tag-row">
-    {{ form_widget(tagForm) }}
-
     <div class="form-group">
-        <div class="col-sm-10 col-sm-offset-2">
-            <a href="#" class="btn btn-default btn-sm action-remove-tag">Remove</a>
+        {{ form_label(tagForm.name) }}
+
+        <div class="col-sm-10">
+            <div class="input-group{% if not tagForm.name.vars.valid %} has-error{% endif %}">
+                {{ form_widget(tagForm.name) }}
+
+                <span class="input-group-btn">
+                    <button class="btn btn-default action-remove-tag" type="button">Remove</button>
+                </span>
+            </div>
+
+            {{ form_errors(tagForm.name) }}
         </div>
     </div>
 </div>

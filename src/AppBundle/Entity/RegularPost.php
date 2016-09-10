@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RegularPost extends Post
 {
     /**
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="post", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="post", cascade={"persist"}, orphanRemoval=true)
      * @Assert\Count(max="3")
      */
     protected $tags;

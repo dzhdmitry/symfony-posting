@@ -25,7 +25,7 @@ $(function() {
         $tags.data('index', index + 1).append(tagForm);
     });
 
-    $(document).on('click', 'a.action-remove-tag', function(e) {
+    $(document).on('click', 'button.action-remove-tag', function(e) {
         e.preventDefault();
 
         $(this).closest('div.tag-row').remove();

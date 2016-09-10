@@ -8,6 +8,10 @@
 
         {% for post in posts %}
             {% include "@App/post.item.html.twig" %}
+        {% else %}
+            <div class="alert alert-info">
+               No posts found for this tag
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
