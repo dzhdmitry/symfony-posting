@@ -8,24 +8,24 @@
 
         <a href="{{ path("post_create") }}" class="btn btn-default btn-sm">Create a post</a>
 
-        <div>
-            {% for post in posts %}
-                <div>
-                    <h3>
-                        <a href="{{ path('post_view', {id: post.id}) }}">{{ post.title }}</a>
-                        <br>
-                        <small>Posted at {{ post.postedAt|date }}</small>
-                    </h3>
+        <div class="row">
+            <div class="col-sm-9">
+                {% for post in posts %}
+                    {% include "@App/post.item.html.twig" %}
+                {% endfor %}
+            </div>
 
-                    <p>
-                        {{ post.content|nl2br }}
-                    </p>
+            <div class="col-sm-3">
+                <h4>Select a tag</h4>
 
-                    <a href="{{ path("post", {id: post.id}) }}" class="btn btn-default btn-sm">Edit</a>
-
-                    <hr>
-                </div>
-            {% endfor %}
+                <ul>
+                    {% for tag in tags %}
+                        <li>
+                            <a href="{{ path("posts_by_tag", {tagName: tag.name}) }}">{{ tag.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

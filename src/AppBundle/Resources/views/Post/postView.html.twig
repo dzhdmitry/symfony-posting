@@ -6,6 +6,8 @@
     <div class="container">
         <h1>View a post</h1>
 
+        <a href="{{ path("homepage") }}">List of posts</a>
+
         <h3>
             {{ post.title }}
             <br>
@@ -27,8 +29,7 @@
         {% else %}
             <p>
                 {% for tag in post.tags %}
-                    <span class="label label-primary">{{ tag.name }}</span>
-                    &ensp;
+                    <a href="{{ path("posts_by_tag", {tagName: tag.name}) }}" class="btn btn-default btn-xs">{{ tag.name }}</a>
                 {% endfor %}
             </p>
         {% endif %}

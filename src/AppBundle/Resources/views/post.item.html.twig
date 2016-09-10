@@ -1,0 +1,15 @@
+<div>
+    <h3>
+        <a href="{{ path('post_view', {id: post.id}) }}">{{ post.title }}</a>
+        <br>
+        <small>Posted at {{ post.postedAt|date }}</small>
+    </h3>
+
+    <p>
+        {{ post.content|nl2br }}
+    </p>
+
+    <a href="{{ path("post", {id: post.id}) }}" class="btn btn-default btn-sm">Edit</a>
+
+    <hr>
+</div>

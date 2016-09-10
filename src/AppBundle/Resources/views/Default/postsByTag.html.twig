@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Posts by tag &laquo;{{ tag }}&raquo; &ndash; {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Posts by tag &laquo;{{ tag }}&raquo;</h1>
+
+        {% for post in posts %}
+            {% include "@App/post.item.html.twig" %}
+        {% endfor %}
+    </div>
+{% endblock %}

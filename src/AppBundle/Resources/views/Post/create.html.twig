@@ -6,6 +6,8 @@
     <div class="container">
         <h1>Create a post</h1>
 
+        <a href="{{ path("homepage") }}">List of posts</a>
+
         <div>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation"{% if activeTab|default("author") == "author" %} class="active"{% endif %}>

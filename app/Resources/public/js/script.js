@@ -20,11 +20,9 @@ $(function() {
 
         var prototype = $tags.data('prototype'),
             index = $tags.data('index'),
-            tagForm = prototype.replace(/__name__/g, index),
-            $row = $('<div class="tag-row"></div>');
+            tagForm = prototype.replace(/__name__/g, index);
 
-        $row.append(tagForm);
-        $tags.data('index', index + 1).append($row);
+        $tags.data('index', index + 1).append(tagForm);
     });
 
     $(document).on('click', 'a.action-remove-tag', function(e) {
