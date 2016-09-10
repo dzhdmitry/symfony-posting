@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Edit a post &ndash; {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Edit a post</h1>
+
+        {% form_theme form "bootstrap_3_horizontal_layout.html.twig" %}
+
+        {{ form_start(form) }}
+            {% block form_content %}{% endblock %}
+
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

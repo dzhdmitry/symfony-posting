@@ -4,8 +4,12 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\AuthorPostDetails;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Url;
 
 class AuthorPostDetailsType extends AbstractType
 {
@@ -16,8 +20,17 @@ class AuthorPostDetailsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('authorName')
-            ->add('url')
+            ->add('authorName', TextType::class, [
+                'constraints' => [
+                    new NotNull()
+                ]
+            ])
+            ->add('url', TextareaType::class, [
+                'constraints' => [
+                    new NotNull(),
+                    new Url()
+                ]
+            ])
         ;
     }
 

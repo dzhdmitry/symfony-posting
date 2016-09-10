@@ -3,8 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AuthorPost;
+use AppBundle\Entity\Post;
 use AppBundle\Entity\RegularPost;
-use AppBundle\Entity\Tag;
 use AppBundle\Form\AuthorPostType;
 use AppBundle\Form\RegularPostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,16 +20,12 @@ class PostController extends Controller
     /**
      * @Template
      * @Route("/create", name="post_create")
-     * @param Request $request
      * @return array
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
         $authorPostForm = $this->createAuthorPostForm();
-
-        $regularPostForm = $this->createForm(RegularPostType::class, null, [
-            'action' => $this->generateUrl("post_create_regular")
-        ]);
+        $regularPostForm = $this->createRegularPostForm();
 
         return [
             'authorPostForm' => $authorPostForm->createView(),
@@ -105,20 +101,76 @@ class PostController extends Controller
      * @Route("/{id}", name="post")
      * @param Request $request
      * @param $id
+     * @return array
      */
     public function postAction(Request $request, $id)
     {
-        switch ($request->getMethod()) {
-            case "get":
-                //
+        $post = $this->findPostOr404($id);
+        $action = $this->generateUrl("post", [
+            'id' => $post->getId()
+        ]);
 
-                break;
-            case "put":
-                //
+        if ($post->getPostType() == Post::TYPE_AUTHOR) {
+            $template = "@App/Post/post.author.html.twig";
+            $form = $this->createForm(AuthorPostType::class, $post, [
+                'action' => $action,
+                'method' => "put"
+            ]);
+        } else {
+            $template = "@App/Post/post.regular.html.twig";
+            $form = $this->createForm(RegularPostType::class, $post, [
+                'action' => $action,
+                'method' => "put"
+            ]);
+        }
 
-                break;
-            default:
-                // method not allowed
+        if ($request->isMethod("put")) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($post);
+                $em->flush();
+
+                return $this->redirectToRoute("post", [
+                    'id' => $post->getId()
+                ]);
+            }
+        }
+
+        return $this->render($template, [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Template
+     * @Route("/{id}/view", name="post_view")
+     * @param $id
+     * @return array
+     */
+    public function postViewAction($id)
+    {
+        $post = $this->findPostOr404($id);
+
+        return [
+            'post' => $post
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return Post
+     */
+    protected function findPostOr404($id)
+    {
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+
+        if ($post) {
+            return $post;
+        } else {
+            throw $this->createNotFoundException();
         }
     }
 

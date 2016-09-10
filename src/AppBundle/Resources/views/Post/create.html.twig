@@ -1,5 +1,7 @@
 {% extends "::base.html.twig" %}
 
+{% block title %}Create a post &ndash; {{ parent() }}{% endblock %}
+
 {% block body %}
     <div class="container">
         <h1>Create a post</h1>
@@ -7,16 +9,16 @@
         <div>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation"{% if activeTab|default("author") == "author" %} class="active"{% endif %}>
-                    <a href="#author" data-toggle="tab">Author post</a>
+                    <a href="#tab-author" data-toggle="tab">Author post</a>
                 </li>
 
                 <li role="presentation"{% if activeTab|default("author") == "regular" %} class="active"{% endif %}>
-                    <a href="#regular" data-toggle="tab">Regular post</a>
+                    <a href="#tab-regular" data-toggle="tab">Regular post</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane{% if activeTab|default("author") == "author" %} active{% endif %}" id="author">
+                <div role="tabpanel" class="tab-pane{% if activeTab|default("author") == "author" %} active{% endif %}" id="tab-author">
                     {% form_theme authorPostForm "bootstrap_3_horizontal_layout.html.twig" %}
 
                     {{ form_start(authorPostForm) }}
@@ -35,7 +37,7 @@
                     {{ form_end(authorPostForm) }}
                 </div>
 
-                <div role="tabpanel" class="tab-pane{% if activeTab|default("author") == "regular" %} active{% endif %}" id="regular">
+                <div role="tabpanel" class="tab-pane{% if activeTab|default("author") == "regular" %} active{% endif %}" id="tab-regular">
                     {% form_theme regularPostForm "bootstrap_3_horizontal_layout.html.twig" %}
 
                     {{ form_start(regularPostForm) }}
@@ -74,44 +76,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        $(function() {
-            $('div.tags-container').each(function(i, container) {
-                var $container = $(container);
-
-                $container.data('index', $container.find('div.tag-row').length)
-            });
-
-            $('a.action-add-tag').click(function(e) {
-                e.preventDefault();
-
-                var $this = $(this),
-                    max = $this.data('max'),
-                    $tags = $($this.data('target'));
-
-                if (max !== undefined) {
-                    if ($tags.find('div.tag-row').length >= max) {
-                        return;
-                    }
-                }
-
-                var prototype = $tags.data('prototype'),
-                    index = $tags.data('index'),
-                    tagForm = prototype.replace(/__name__/g, index);
-
-                $tags.data('index', index + 1);
-
-                var $row = $('<div class="tag-row"></div>');
-
-                $row.append(tagForm);
-                $tags.append($row);
-            });
-
-            $(document).on('click', 'a.action-remove-tag', function(e) {
-                e.preventDefault();
-
-                $(this).closest('div.tag-row').remove();
-            });
-        });
-    </script>
+    <script src="{{ asset("js/app-min.js") }}"></script>
 {% endblock %}

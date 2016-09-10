@@ -1,0 +1,10 @@
+{% extends 'AppBundle:Post:post.html.twig' %}
+
+{% block form_content %}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+    {{ form_widget(form.authorPostDetails) }}
+    {{ form_errors(form.authorPostDetails) }}
+{% endblock %}
