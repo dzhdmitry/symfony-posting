@@ -1,6 +1,11 @@
 <div>
     <h3>
         <a href="{{ path('post_view', {id: post.id}) }}">{{ post.title }}</a>
+
+        {% if post.postType == "author" %}
+            <span class="label label-default">Author's post</span>
+        {% endif %}
+
         <br>
         <small>Posted at {{ post.postedAt|date }}</small>
     </h3>

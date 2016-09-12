@@ -23,10 +23,4 @@
 /app/phpunit.xml
 /phpunit.xml
 
-/app/data.db3
-/var/*.db3
-/var/pictures/*
-/var/previews/*
-!var/pictures/.gitkeep
-!var/previews/.gitkeep
 /node_modules
