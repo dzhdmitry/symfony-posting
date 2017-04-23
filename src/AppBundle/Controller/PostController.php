@@ -8,7 +8,9 @@ use AppBundle\Entity\RegularPost;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/posts")
@@ -18,6 +20,7 @@ class PostController extends Controller
     /**
      * @Template
      * @Route("/create", name="post_create")
+     *
      * @return array
      */
     public function createAction()
@@ -34,8 +37,9 @@ class PostController extends Controller
     /**
      * @Template("@App/Post/create.html.twig")
      * @Route("/create/author", name="post_create_author")
+     *
      * @param Request $request
-     * @return array
+     * @return RedirectResponse|array
      */
     public function createAuthorPostAction(Request $request)
     {
@@ -63,8 +67,9 @@ class PostController extends Controller
     /**
      * @Template("@App/Post/create.html.twig")
      * @Route("/create/regular", name="post_create_regular")
+     *
      * @param Request $request
-     * @return array
+     * @return RedirectResponse|array
      */
     public function createRegularPostAction(Request $request)
     {
@@ -91,9 +96,10 @@ class PostController extends Controller
 
     /**
      * @Route("/{id}", name="post")
+     *
      * @param Request $request
      * @param $id
-     * @return array
+     * @return RedirectResponse|Response
      */
     public function postAction(Request $request, $id)
     {
@@ -127,6 +133,7 @@ class PostController extends Controller
     /**
      * @Template
      * @Route("/{id}/view", name="post_view")
+     *
      * @param $id
      * @return array
      */

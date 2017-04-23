@@ -3,12 +3,11 @@
 namespace AppBundle\Service;
 
 use AppBundle\Form\RegularPostType;
-use Symfony\Component\Form\AbstractType;
 
 class RegularPostFormCreator extends PostFormCreator
 {
     /**
-     * @return AbstractType
+     * @return string
      */
     public function getFormType()
     {
@@ -20,6 +19,6 @@ class RegularPostFormCreator extends PostFormCreator
      */
     public function getCreateUrl()
     {
-        $this->router->generate("post_create_regular");
+        return $this->router->generate("post_create_regular");
     }
 }

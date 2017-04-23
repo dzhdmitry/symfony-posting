@@ -29,6 +29,7 @@ class DefaultController extends Controller
     /**
      * @Template
      * @Route("/tag/{tagName}", name="posts_by_tag")
+     *
      * @param $tagName
      * @return array
      */

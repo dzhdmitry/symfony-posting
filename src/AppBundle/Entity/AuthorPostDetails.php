@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AuthorPostDetails
@@ -21,11 +22,14 @@ class AuthorPostDetails
 
     /**
      * @ORM\Column(name="authorName", type="string", length=255)
+     * @Assert\NotNull
      */
     protected $authorName;
 
     /**
      * @ORM\Column(name="url", type="text")
+     * @Assert\NotNull
+     * @Assert\Url
      */
     protected $url;
 

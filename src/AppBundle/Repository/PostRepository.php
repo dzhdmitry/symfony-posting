@@ -3,8 +3,9 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Post;
+use Doctrine\ORM\EntityRepository;
 
-class PostRepository extends \Doctrine\ORM\EntityRepository
+class PostRepository extends EntityRepository
 {
     /**
      * @return Post[]

@@ -3,8 +3,9 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\RegularPost;
+use Doctrine\ORM\EntityRepository;
 
-class RegularPostRepository extends \Doctrine\ORM\EntityRepository
+class RegularPostRepository extends EntityRepository
 {
     /**
      * @param string $tagName

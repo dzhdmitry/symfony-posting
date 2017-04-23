@@ -26,11 +26,11 @@ class PostManager
     {
         $post = $this->em->getRepository(Post::class)->find($id);
 
-        if ($post) {
-            return $post;
-        } else {
+        if ($post === null) {
             throw new NotFoundHttpException("Post not found");
         }
+
+        return $post;
     }
 
     /**

@@ -20,6 +20,7 @@ class Tag
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull
      */
     protected $name;
 
