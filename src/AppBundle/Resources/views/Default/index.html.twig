@@ -9,7 +9,7 @@
         <a href="{{ path("post_create") }}" class="btn btn-default btn-sm">Create a post</a>
 
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-9 posts-container">
                 {% for post in posts %}
                     {% include "@App/post.item.html.twig" %}
                 {% else %}
