@@ -5,4 +5,4 @@ Posting Symfony 3 app
 
 ## License
 
-Licensed under the [MIT license](https://github.com/dzhdmitry/dx/blob/master/LICENSE).
+Licensed under the [MIT license](https://github.com/dzhdmitry/symfony-posting/blob/master/LICENSE.txt).
