@@ -3,7 +3,6 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Post;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Routing\Router;
 
@@ -26,7 +25,7 @@ abstract class PostFormCreator
     }
 
     /**
-     * @return AbstractType
+     * @return string
      */
     abstract public function getFormType();
 

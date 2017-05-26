@@ -3,12 +3,11 @@
 namespace AppBundle\Service;
 
 use AppBundle\Form\AuthorPostType;
-use Symfony\Component\Form\AbstractType;
 
 class AuthorPostFormCreator extends PostFormCreator
 {
     /**
-     * @return AbstractType
+     * @return string
      */
     public function getFormType()
     {

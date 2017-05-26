@@ -13,7 +13,7 @@ class TagRepository extends EntityRepository
     public function findDistinctTags()
     {
         return $this->createQueryBuilder("tag")
-            ->groupBy("tag.name")
+            ->groupBy("tag.name, tag.id")
             ->getQuery()
             ->execute();
     }
