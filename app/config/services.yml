@@ -1,8 +1,3 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
-parameters:
-#    parameter_name: value
-
 services:
     gedmo.listener.timestampable:
         class: Gedmo\Timestampable\TimestampableListener
@@ -11,14 +6,10 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    author_form_creator:
-        class: AppBundle\Service\AuthorPostFormCreator
-        arguments: [ "@router", "@form.factory" ]
+    author_form_factory:
+        class: AppBundle\Service\PostFormFactory
+        arguments: [ "@router", "@form.factory", AppBundle\Form\AuthorPostType, 'author' ]
 
-    regular_form_creator:
-        class: AppBundle\Service\RegularPostFormCreator
-        arguments: [ "@router", "@form.factory" ]
-
-    post_manager:
-        class: AppBundle\Service\PostManager
-        arguments: [ "@doctrine.orm.entity_manager" ]
+    regular_form_factory:
+        class: AppBundle\Service\PostFormFactory
+        arguments: [ "@router", "@form.factory", AppBundle\Form\RegularPostType, 'regular' ]

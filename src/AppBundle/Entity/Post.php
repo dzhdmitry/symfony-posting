@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="post")
+ * @ORM\Table
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\MappedSuperclass()
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -19,30 +19,30 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class Post
 {
-    const TYPE_AUTHOR = "author";
-    const TYPE_REGULAR = "regular";
+    const TYPE_AUTHOR = 'author';
+    const TYPE_REGULAR = 'regular';
 
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      */
     protected $title;
 
     /**
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotNull
      */
     protected $content;
 
     /**
-     * @ORM\Column(name="posted_at", type="datetime")
+     * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     protected $postedAt;
@@ -50,8 +50,6 @@ abstract class Post
     abstract public function getPostType();
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -60,8 +58,6 @@ abstract class Post
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      * @return Post
      */
@@ -73,8 +69,6 @@ abstract class Post
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -83,8 +77,6 @@ abstract class Post
     }
 
     /**
-     * Set content
-     *
      * @param string $content
      * @return Post
      */
@@ -96,8 +88,6 @@ abstract class Post
     }
 
     /**
-     * Get content
-     *
      * @return string
      */
     public function getContent()
@@ -106,8 +96,6 @@ abstract class Post
     }
 
     /**
-     * Set postedAt
-     *
      * @param \DateTime $postedAt
      * @return Post
      */
@@ -119,8 +107,6 @@ abstract class Post
     }
 
     /**
-     * Get postedAt
-     *
      * @return \DateTime
      */
     public function getPostedAt()

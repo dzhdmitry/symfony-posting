@@ -2,9 +2,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     less = require('gulp-less'),
     minify = require('gulp-minify'),
-    cleanCSS = require('gulp-clean-css'),
-    rename = require('gulp-rename'),
-    jsonminify = require('gulp-jsonminify');
+    cleanCSS = require('gulp-clean-css');
 
 var VENDOR_ROOT = "./node_modules";
 var RESOURCES_ROOT = "./app/Resources/public";

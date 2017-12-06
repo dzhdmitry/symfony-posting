@@ -1,6 +1,6 @@
 <div>
     <h3>
-        <a href="{{ path('post_view', {id: post.id}) }}">{{ post.title }}</a>
+        <a href="{{ path("app_post_postview", {id: post.id}) }}">{{ post.title }}</a>
 
         {% if post.postType == "author" %}
             <span class="label label-default">Author's post</span>
@@ -14,7 +14,7 @@
         {{ post.content|nl2br }}
     </p>
 
-    <a href="{{ path("post", {id: post.id}) }}" class="btn btn-default btn-sm">Edit</a>
+    <a href="{{ path("app_post_post", {id: post.id}) }}" class="btn btn-default btn-sm">Edit</a>
 
     <hr>
 </div>

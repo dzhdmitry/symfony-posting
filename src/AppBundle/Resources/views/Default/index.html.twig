@@ -6,7 +6,7 @@
     <div class="container">
         <h1>List of posts</h1>
 
-        <a href="{{ path("post_create") }}" class="btn btn-default btn-sm">Create a post</a>
+        <a href="{{ path("app_post_create") }}" class="btn btn-default btn-sm">Create a post</a>
 
         <div class="row">
             <div class="col-sm-9 posts-container">
@@ -26,7 +26,7 @@
                     <ul class="post-tags">
                         {% for tag in tags %}
                             <li>
-                                <a href="{{ path("posts_by_tag", {tagName: tag.name}) }}" class="btn btn-default btn-xs">
+                                <a href="{{ path("app_default_postsbytag", {tagName: tag.name}) }}" class="btn btn-default btn-xs">
                                     {{ tag.name }}
                                 </a>
                             </li>

@@ -13,7 +13,7 @@ class DefaultController extends Controller
 {
     /**
      * @Template
-     * @Route("/", name="homepage")
+     * @Route("/")
      */
     public function indexAction()
     {
@@ -28,7 +28,7 @@ class DefaultController extends Controller
 
     /**
      * @Template
-     * @Route("/tag/{tagName}", name="posts_by_tag")
+     * @Route("/tag/{tagName}")
      *
      * @param $tagName
      * @return array

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegularPostRepository")
@@ -19,12 +20,10 @@ class RegularPost extends Post
 
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
-     * Add tag
-     *
      * @param Tag $tag
      * @return Post
      */
@@ -36,8 +35,6 @@ class RegularPost extends Post
     }
 
     /**
-     * Remove tag
-     *
      * @param Tag $tag
      */
     public function removeTag(Tag $tag)
@@ -46,17 +43,18 @@ class RegularPost extends Post
     }
 
     /**
-     * Get tags
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|Tag[]
      */
     public function getTags()
     {
         return $this->tags;
     }
 
+    /**
+     * @return string
+     */
     public function getPostType()
     {
-        return $this::TYPE_REGULAR;
+        return self::TYPE_REGULAR;
     }
 }

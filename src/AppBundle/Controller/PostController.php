@@ -19,110 +19,74 @@ class PostController extends Controller
 {
     /**
      * @Template
-     * @Route("/create", name="post_create")
-     *
-     * @return array
-     */
-    public function createAction()
-    {
-        $authorPostForm = $this->get("author_form_creator")->createForm();
-        $regularPostForm = $this->get("regular_form_creator")->createForm();
-
-        return [
-            'authorPostForm' => $authorPostForm->createView(),
-            'regularPostForm' => $regularPostForm->createView()
-        ];
-    }
-
-    /**
-     * @Template("@App/Post/create.html.twig")
-     * @Route("/create/author", name="post_create_author")
+     * @Route("/create")
+     * @Route("/create/{type}", requirements={"type"="author|regular"})
      *
      * @param Request $request
+     * @param $type
      * @return RedirectResponse|array
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createAuthorPostAction(Request $request)
+    public function createAction(Request $request, $type = null)
     {
-        $authorPost = new AuthorPost();
-        $authorPostForm = $this->get("author_form_creator")->createForm($authorPost);
-        $regularPostForm = $this->get("regular_form_creator")->createForm();
+        $authorPostForm = $this->get('author_form_factory')->createCreateForm();
+        $regularPostForm = $this->get('regular_form_factory')->createCreateForm();
 
-        if ($request->isMethod("post")) {
-            $authorPostForm->handleRequest($request);
-
-            if ($authorPostForm->isValid()) {
-                $this->get("post_manager")->save($authorPost);
-
-                return $this->redirectToRoute("homepage");
+        if ($type !== null) {
+            if ($type === Post::TYPE_AUTHOR) {
+                $post = new AuthorPost();
+                $form = $authorPostForm;
+            } else {
+                $post = new RegularPost();
+                $form = $regularPostForm;
             }
-        }
 
-        return [
-            'authorPostForm' => $authorPostForm->createView(),
-            'regularPostForm' => $regularPostForm->createView(),
-            'activeTab' => "author"
-        ];
-    }
-
-    /**
-     * @Template("@App/Post/create.html.twig")
-     * @Route("/create/regular", name="post_create_regular")
-     *
-     * @param Request $request
-     * @return RedirectResponse|array
-     */
-    public function createRegularPostAction(Request $request)
-    {
-        $regularPost = new RegularPost();
-        $authorPostForm = $this->get("author_form_creator")->createForm();
-        $regularPostForm = $this->get("regular_form_creator")->createForm($regularPost);
-
-        if ($request->isMethod("post")) {
-            $regularPostForm->handleRequest($request);
-
-            if ($regularPostForm->isValid()) {
-                $this->get("post_manager")->save($regularPost);
-
-                return $this->redirectToRoute("homepage");
-            }
-        }
-
-        return [
-            'authorPostForm' => $authorPostForm->createView(),
-            'regularPostForm' => $regularPostForm->createView(),
-            'activeTab' => "regular"
-        ];
-    }
-
-    /**
-     * @Route("/{id}", name="post")
-     *
-     * @param Request $request
-     * @param $id
-     * @return RedirectResponse|Response
-     */
-    public function postAction(Request $request, $id)
-    {
-        $post = $this->get("post_manager")->findPostOr404($id);
-
-        if ($post->getPostType() == Post::TYPE_AUTHOR) {
-            $form = $this->get("author_form_creator")->createEditForm($post);
-            $template = "@App/Post/post.author.html.twig";
-        } else {
-            $form = $this->get("regular_form_creator")->createEditForm($post);
-            $template = "@App/Post/post.regular.html.twig";
-        }
-
-        if ($request->isMethod("put")) {
+            $form->setData($post);
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $this->get("post_manager")->save($post);
+                $em = $this->get('doctrine.orm.default_entity_manager');
 
-                return $this->redirectToRoute("post", [
-                    'id' => $post->getId()
-                ]);
+                $em->persist($post);
+                $em->flush();
+
+                return $this->redirectToRoute('app_default_index');
             }
+        }
+
+        return [
+            'authorPostForm' => $authorPostForm->createView(),
+            'regularPostForm' => $regularPostForm->createView(),
+            'activeTab' => $type
+        ];
+    }
+
+    /**
+     * @Route("/{id}")
+     *
+     * @param Request $request
+     * @param Post $post
+     * @return RedirectResponse|Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function postAction(Request $request, Post $post)
+    {
+        if ($post->getPostType() === Post::TYPE_AUTHOR) {
+            $form = $this->get('author_form_factory')->createEditForm($post);
+            $template = '@App/Post/post.author.html.twig';
+        } else {
+            $form = $this->get('regular_form_factory')->createEditForm($post);
+            $template = '@App/Post/post.regular.html.twig';
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->get('doctrine.orm.default_entity_manager')->flush();
+
+            return $this->redirectToRoute('app_post_postview', [
+                'id' => $post->getId()
+            ]);
         }
 
         return $this->render($template, [
@@ -132,15 +96,13 @@ class PostController extends Controller
 
     /**
      * @Template
-     * @Route("/{id}/view", name="post_view")
+     * @Route("/{id}/view")
      *
-     * @param $id
+     * @param Post $post
      * @return array
      */
-    public function postViewAction($id)
+    public function postViewAction(Post $post)
     {
-        $post = $this->get("post_manager")->findPostOr404($id);
-
         return [
             'post' => $post
         ];

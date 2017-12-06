@@ -17,8 +17,6 @@ class AuthorPost extends Post
     protected $authorPostDetails;
 
     /**
-     * Set authorPostDetails
-     *
      * @param AuthorPostDetails $authorPostDetails
      * @return AuthorPost
      */
@@ -30,8 +28,6 @@ class AuthorPost extends Post
     }
 
     /**
-     * Get authorPostDetails
-     *
      * @return AuthorPostDetails
      */
     public function getAuthorPostDetails()
@@ -39,8 +35,11 @@ class AuthorPost extends Post
         return $this->authorPostDetails;
     }
 
+    /**
+     * @return string
+     */
     public function getPostType()
     {
-        return $this::TYPE_AUTHOR;
+        return self::TYPE_AUTHOR;
     }
 }

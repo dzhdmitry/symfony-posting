@@ -6,28 +6,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AuthorPostDetails
- *
- * @ORM\Table(name="author_post_details")
+ * @ORM\Table
  * @ORM\Entity
  */
 class AuthorPostDetails
 {
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\Column(name="authorName", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      */
     protected $authorName;
 
     /**
-     * @ORM\Column(name="url", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotNull
      * @Assert\Url
      */
@@ -40,8 +38,6 @@ class AuthorPostDetails
     protected $authorPost;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -50,8 +46,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Set authorName
-     *
      * @param string $authorName
      * @return AuthorPostDetails
      */
@@ -63,8 +57,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Get authorName
-     *
      * @return string
      */
     public function getAuthorName()
@@ -73,8 +65,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Set url
-     *
      * @param string $url
      * @return AuthorPostDetails
      */
@@ -86,8 +76,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Get url
-     *
      * @return string
      */
     public function getUrl()
@@ -96,8 +84,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Set authorPost
-     *
      * @param AuthorPost $authorPost
      * @return AuthorPostDetails
      */
@@ -109,8 +95,6 @@ class AuthorPostDetails
     }
 
     /**
-     * Get authorPost
-     *
      * @return AuthorPost
      */
     public function getAuthorPost()

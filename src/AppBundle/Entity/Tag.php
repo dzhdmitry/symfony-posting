@@ -6,20 +6,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="tag")
+ * @ORM\Table
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
  */
 class Tag
 {
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      */
     protected $name;
@@ -31,8 +31,6 @@ class Tag
     protected $post;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -41,8 +39,6 @@ class Tag
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Tag
      */
@@ -54,8 +50,6 @@ class Tag
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -64,8 +58,6 @@ class Tag
     }
 
     /**
-     * Set post
-     *
      * @param Post $post
      * @return Tag
      */
@@ -77,9 +69,7 @@ class Tag
     }
 
     /**
-     * Get post
-     *
-     * @return \AppBundle\Entity\Post
+     * @return Post
      */
     public function getPost()
     {
